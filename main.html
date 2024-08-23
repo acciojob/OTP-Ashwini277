@@ -4,21 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        .code-container {
+            display: flex;
+            gap: 8px;
+        }
+        .code {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <div class="otp-container">
-        <h1 id="verification_heading">OTP Verification</h1>
-        <p id="verification_subtext">Please enter the 6-digit code sent to your phone.</p>
-        <div class="code-container">
-            <input type="text" id="code-1" class="code" maxlength="1">
-            <input type="text" id="code-2" class="code" maxlength="1">
-            <input type="text" id="code-3" class="code" maxlength="1">
-            <input type="text" id="code-4" class="code" maxlength="1">
-            <input type="text" id="code-5" class="code" maxlength="1">
-            <input type="text" id="code-6" class="code" maxlength="1">
-        </div>
+    <h1 id="verification_heading">OTP Verification</h1>
+    <p id="verification_subtext">Please enter the 6-digit OTP sent to your email.</p>
+    <div class="code-container">
+        <input id="code-1" class="code" type="text" maxlength="1">
+        <input id="code-2" class="code" type="text" maxlength="1">
+        <input id="code-3" class="code" type="text" maxlength="1">
+        <input id="code-4" class="code" type="text" maxlength="1">
+        <input id="code-5" class="code" type="text" maxlength="1">
+        <input id="code-6" class="code" type="text" maxlength="1">
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.querySelectorAll('.code').forEach((input, index, inputs) => {
+            input.addEventListener('keyup', (event) => {
+                const value = event.target.value;
+                if (event.key === 'Backspace') {
+                    if (index > 0 && value === '') {
+                        inputs[index - 1].focus();
+                    }
+                } else if (value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

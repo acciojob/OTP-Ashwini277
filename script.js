@@ -1,23 +1,14 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const inputs = document.querySelectorAll('.code');
-
-    inputs.forEach((input, index) => {
-        input.addEventListener('input', (e) => {
-            if (e.target.value.length > 1) {
-                e.target.value = e.target.value.slice(0, 1);
-            }
-            if (index < inputs.length - 1 && e.target.value) {
-                inputs[index + 1].focus();
-            }
-        });
-
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !input.value) {
-                if (index > 0) {
-                    inputs[index - 1].focus();
-                }
-            }
-        });
-    });
+it("Checking Deletion", () => {
+  cy.visit(baseUrl + "/main.html");
+  cy.get(".code-container").find("input.code").eq(5).type("{backspace}");
+  cy.get("#code-5").should("be.focused");
+  cy.get(".code").eq(4).type("{backspace}");
+  cy.get("#code-4").should("be.focused");
+  cy.get(".code").eq(3).type("{backspace}");
+  cy.get("#code-3").should("be.focused");
+  cy.get(".code").eq(2).type("{backspace}");
+  cy.get("#code-2").should("be.focused");
+  cy.get(".code").eq(1).type("{backspace}");
+  cy.get("#code-1").should("be.focused");
+  cy.get(".code").eq(0).type("{backspace}");
 });
-
